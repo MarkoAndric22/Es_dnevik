@@ -10,12 +10,12 @@ public class SubjectMapper implements GenericMapper<SubjectEntity, SubjectEntity
 
 	@Override
 	public SubjectEntity toEntity(SubjectEntityDTO dto) {
-		return new SubjectEntity(dto.getName(),dto.getFond(),dto.getSemester());
+		return new SubjectEntity(dto.getName(),dto.getFond());
 	}
 
 	@Override
 	public SubjectEntityDTO toDto(SubjectEntity entity) {
-		return new SubjectEntityDTO(entity.getName(),entity.getFond(),entity.getSemester());
+		return new SubjectEntityDTO(entity.getName(),entity.getFond());
 	}
 
 }

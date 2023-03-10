@@ -45,14 +45,19 @@ public class TeacherEntity {
 	@Size(min=5,max=20, message= "Last name must be beetwen {min} and {max} characters long.")
 	protected String last_name;
 	
-	@OneToMany(mappedBy="teacher", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="teacher", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <NasPredajuPred>nasPredajuPreds;
 	
-	@OneToOne
+	@OneToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id")
+	@JsonIgnore
 	UserEntity user;
+	
+	@OneToMany(mappedBy="teacher", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+	@JsonIgnore
+	List <TeacherClass>teacherClass;
 
 	public TeacherEntity(Integer id,
 			@NotNull(message = "Name must be provided") @Size(min = 5, max = 20, message = "Name must be beetwen {min} and {max} characters long.") String first_name,
@@ -128,6 +133,33 @@ public class TeacherEntity {
 		this.first_name = first_name;
 		this.last_name = last_name;
 	}
+
+	public TeacherEntity(Integer id,
+			@NotNull(message = "Name must be provided") @Size(min = 5, max = 20, message = "Name must be beetwen {min} and {max} characters long.") String first_name,
+			@NotNull(message = "Laste name must be provided") @Size(min = 5, max = 20, message = "Last name must be beetwen {min} and {max} characters long.") String last_name,
+			List<NasPredajuPred> nasPredajuPreds, UserEntity user, List<TeacherClass> teacherClass) {
+		super();
+		this.id = id;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.nasPredajuPreds = nasPredajuPreds;
+		this.user = user;
+		this.teacherClass = teacherClass;
+	}
+
+	public List<TeacherClass> getTeacherClass() {
+		return teacherClass;
+	}
+
+	public void setTeacherClass(List<TeacherClass> teacherClass) {
+		this.teacherClass = teacherClass;
+	}
+
+	@Override
+	public String toString() {
+		return "TeacherEntity [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + "]";
+	}
+	
 	
 	
 }

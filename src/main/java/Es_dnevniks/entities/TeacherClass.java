@@ -9,37 +9,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="markSubject")
-public class MarkSubject {
+@Table(name="TeacherClass")
+public class TeacherClass {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "family_id")
+	@Column(name = "teacherClass_id")
 	protected Integer id;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("mark")
-	@JoinColumn(name = "mark_id")
-	MarkEntity mark;
+
+	@JoinColumn(name ="teacher_id")
+	TeacherEntity teacher;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("subject")
-	@JoinColumn(name = "subject_id")
-	SubjectEntity subject;
 
-	public MarkSubject(Integer id, MarkEntity mark, SubjectEntity subject) {
+	@JoinColumn(name = "class_id")
+	ClassEntity classes;
+
+	public TeacherClass(Integer id, TeacherEntity teacher, ClassEntity classes) {
 		super();
 		this.id = id;
-		this.mark = mark;
-		this.subject = subject;
-	}
-
-	public MarkSubject() {
-		super();
+		this.teacher = teacher;
+		this.classes = classes;
 	}
 
 	public Integer getId() {
@@ -50,22 +45,25 @@ public class MarkSubject {
 		this.id = id;
 	}
 
-	public MarkEntity getMark() {
-		return mark;
+	public TeacherEntity getTeacher() {
+		return teacher;
 	}
 
-	public void setMark(MarkEntity mark) {
-		this.mark = mark;
+	public void setTeacher(TeacherEntity teacher) {
+		this.teacher = teacher;
 	}
 
-	public SubjectEntity getSubject() {
-		return subject;
+	public ClassEntity getClasses() {
+		return classes;
 	}
 
-	public void setSubject(SubjectEntity subject) {
-		this.subject = subject;
+	public void setClasses(ClassEntity classes) {
+		this.classes = classes;
 	}
 
+	public TeacherClass() {
+		super();
+	}
 	
 
 }

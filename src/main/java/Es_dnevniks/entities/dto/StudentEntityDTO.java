@@ -4,8 +4,6 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
-
 public class StudentEntityDTO {
 	
 	@Column(nullable=false,name="name_student")

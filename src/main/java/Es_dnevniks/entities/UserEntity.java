@@ -16,14 +16,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
-
-
-
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class UserEntity {
 	
 	@Id
@@ -39,18 +35,18 @@ public class UserEntity {
 	@NotNull(message="Last name must be provided")
 	protected String lastName;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique = true)
 	@NotNull(message="username must be provided")
 	@Size(min=5,max=20, message= "username must be beetwen {min} and {max} characters long.")
 	protected String username;
 	
 	@Column(nullable=false,name="password")
 	@NotNull(message="Password must be provided")
-	@Size(min=5,max=20, message= "password must be beetwen {min} and {max} characters long.")
+	@Size(min=5,max=100, message= "password must be beetwen {min} and {max} characters long.")
 	@JsonIgnore
 	protected String password;
 	
-	@Column(nullable=false,name = "email")
+	@Column(nullable=false,name = "email", unique = true)
 	@NotNull(message="Email must be provided")
 	@Size(min=2,max=30, message= "Email must be beetwen {min} and {max} characters long.")
 	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
@@ -59,19 +55,23 @@ public class UserEntity {
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "role")
+	@JsonIgnore
 	protected RoleEntity role;
 
 	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    @JsonIgnore
     StudentEntity student;
 	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    @JsonIgnore
     TeacherEntity teacher;
 	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    @JsonIgnore
     ParentEntity parent;
 
 	public UserEntity(Integer id, @NotNull(message = "name must be provided") String name,
@@ -208,6 +208,12 @@ public class UserEntity {
 
 	public void setParent(ParentEntity parent) {
 		this.parent = parent;
+	}
+
+	@Override
+	public String toString() {
+		return "UserEntity [id=" + id + ", name=" + name + ", lastName=" + lastName + ", username=" + username
+				+ ", password=" + password + ", email=" + email + ", role=" + role + "]";
 	}
 	
 	

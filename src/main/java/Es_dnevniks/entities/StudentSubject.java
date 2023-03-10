@@ -22,12 +22,12 @@ public class StudentSubject {
 	protected Integer id;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("student")
+
 	@JoinColumn(name = "student_id")
 	StudentEntity student;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("subject")
+
 	@JoinColumn(name = "subject_id")
 	SubjectEntity subject;
 
@@ -37,10 +37,20 @@ public class StudentSubject {
 		this.student = student;
 		this.subject = subject;
 	}
+	
+	
 
 	public StudentSubject() {
 		super();
 	}
+
+	public StudentSubject(StudentEntity student, SubjectEntity subject) {
+		super();
+		this.student = student;
+		this.subject = subject;
+	}
+
+
 
 	public Integer getId() {
 		return id;

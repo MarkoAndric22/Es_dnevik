@@ -21,18 +21,15 @@ public class StudentSubjectMark {
 	@Column(name = "id")
 	protected Integer id;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("student")
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name = "student_id")
 	protected StudentEntity student;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("subject")
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name = "subject_id")
 	protected SubjectEntity subject;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("mark")
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name = "mark_id")
 	protected MarkEntity mark;
 
@@ -43,6 +40,17 @@ public class StudentSubjectMark {
 		this.subject = subject;
 		this.mark = mark;
 	}
+	
+	
+
+	public StudentSubjectMark(StudentEntity student, SubjectEntity subject, MarkEntity mark) {
+		super();
+		this.student = student;
+		this.subject = subject;
+		this.mark = mark;
+	}
+
+
 
 	public StudentSubjectMark() {
 		super();

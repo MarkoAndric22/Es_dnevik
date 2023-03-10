@@ -41,7 +41,7 @@ public class StudentEntity {
 	@Size(min=2,max=30, message= "Last name must be beetwen {min} and {max} characters long.")
 	protected String last_name;
 	
-	@OneToMany(mappedBy="student", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="student", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <StudentSubject>studentSubj;
 	
@@ -51,22 +51,19 @@ public class StudentEntity {
 	List <StudentSubjectMark> studentSubjectMark;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("classes")
-	@JoinColumn(name = "classes_id")
+	@JoinColumn(name = "classes_id", nullable = true)
 	ClassEntity classes;
 	
-	@OneToMany(mappedBy="student", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="student", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <ParentStudent>parentStudents;
-	
-	@OneToMany(mappedBy="student", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
-	@JsonIgnore
-	List <StudentMark>studentMark;
-	
-	@OneToOne
+
+	@OneToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id")
+	@JsonIgnore
 	UserEntity user;
+	
 
 	public StudentEntity(Integer id,
 			@NotNull(message = "First name must be provided") @Size(min = 2, max = 30, message = "First name must be beetwen {min} and {max} characters long.") String first_name,
@@ -165,46 +162,8 @@ public class StudentEntity {
 		this.last_name = last_name;
 	}
 
-	public StudentEntity(Integer id,
-			@NotNull(message = "First name must be provided") @Size(min = 2, max = 30, message = "First name must be beetwen {min} and {max} characters long.") String first_name,
-			@NotNull(message = "Last name must be provided") @Size(min = 2, max = 30, message = "Last name must be beetwen {min} and {max} characters long.") String last_name,
-			List<StudentSubject> studentSubj, ClassEntity classes, List<ParentStudent> parentStudents,
-			List<StudentMark> studentMark, UserEntity user) {
-		super();
-		this.id = id;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.studentSubj = studentSubj;
-		this.classes = classes;
-		this.parentStudents = parentStudents;
-		this.studentMark = studentMark;
-		this.user = user;
-	}
-
-	public List<StudentMark> getStudentMark() {
-		return studentMark;
-	}
-
-	public void setStudentMark(List<StudentMark> studentMark) {
-		this.studentMark = studentMark;
-	}
-
-	public StudentEntity(Integer id,
-			@NotNull(message = "First name must be provided") @Size(min = 2, max = 30, message = "First name must be beetwen {min} and {max} characters long.") String first_name,
-			@NotNull(message = "Last name must be provided") @Size(min = 2, max = 30, message = "Last name must be beetwen {min} and {max} characters long.") String last_name,
-			List<StudentSubject> studentSubj, List<StudentSubjectMark> studentSubjectMark, ClassEntity classes,
-			List<ParentStudent> parentStudents, List<StudentMark> studentMark, UserEntity user) {
-		super();
-		this.id = id;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.studentSubj = studentSubj;
-		this.studentSubjectMark = studentSubjectMark;
-		this.classes = classes;
-		this.parentStudents = parentStudents;
-		this.studentMark = studentMark;
-		this.user = user;
-	}
+	
+	
 
 	public List<StudentSubjectMark> getStudentSubjectMark() {
 		return studentSubjectMark;
@@ -214,5 +173,8 @@ public class StudentEntity {
 		this.studentSubjectMark = studentSubjectMark;
 	}
 
+
+
+	
 	
 }

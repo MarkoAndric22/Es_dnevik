@@ -21,12 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
-
-
-
-
-
-
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class ParentEntity {
@@ -45,7 +39,7 @@ public class ParentEntity {
 	@Size(min=2,max=30, message= "Last name must be beetwen {min} and {max} characters long.")
 	protected String last_name;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique = true)
 	@NotNull(message="Email must be provided")
 	@Size(min=2,max=30, message= "Email must be beetwen {min} and {max} characters long.")
 	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
@@ -53,13 +47,14 @@ public class ParentEntity {
 	protected String email;
 
 	
-	@OneToMany(mappedBy="parent", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="parent", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <ParentStudent>parentStudents;
 	
-	@OneToOne
+	@OneToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id")
+	@JsonIgnore
 	UserEntity user;
 
 	public ParentEntity(Integer id,

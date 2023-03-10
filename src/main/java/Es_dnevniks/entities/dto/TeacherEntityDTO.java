@@ -4,11 +4,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
-
-
 public class TeacherEntityDTO {
-	
 
 	@Column(nullable=false)
 	@NotNull(message="Name must be provided")

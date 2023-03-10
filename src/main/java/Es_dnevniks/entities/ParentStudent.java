@@ -21,12 +21,12 @@ public class ParentStudent {
 	protected Integer id;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("parent")
+
 	@JoinColumn(name = "parent_id")
 	ParentEntity parent;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("student")
+
 	@JoinColumn(name = "student_id")
 	StudentEntity student;
 
@@ -36,6 +36,16 @@ public class ParentStudent {
 		this.parent = parent;
 		this.student = student;
 	}
+	
+	
+
+	public ParentStudent(ParentEntity parent, StudentEntity student) {
+		super();
+		this.parent = parent;
+		this.student = student;
+	}
+
+
 
 	public ParentStudent() {
 		super();

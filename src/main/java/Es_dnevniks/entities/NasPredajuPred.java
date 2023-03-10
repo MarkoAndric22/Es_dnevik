@@ -23,13 +23,58 @@ public class NasPredajuPred {
 	protected Integer id;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("teacher")
+
 	@JoinColumn(name = "teacher_id")
 	TeacherEntity teacher;
 	
 	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-	@MapsId("subject")
+
 	@JoinColumn(name = "subject_id")
 	SubjectEntity subject;
+
+	public NasPredajuPred(Integer id, TeacherEntity teacher, SubjectEntity subject) {
+		super();
+		this.id = id;
+		this.teacher = teacher;
+		this.subject = subject;
+	}
+
+	public NasPredajuPred() {
+		super();
+	}
+
+	public NasPredajuPred(TeacherEntity teacher, SubjectEntity subject) {
+		super();
+		this.teacher = teacher;
+		this.subject = subject;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public TeacherEntity getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(TeacherEntity teacher) {
+		this.teacher = teacher;
+	}
+
+	public SubjectEntity getSubject() {
+		return subject;
+	}
+
+	public void setSubject(SubjectEntity subject) {
+		this.subject = subject;
+	}
+	
+	
+	
+	
 
 }

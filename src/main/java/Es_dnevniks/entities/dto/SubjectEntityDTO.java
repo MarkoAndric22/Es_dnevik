@@ -5,8 +5,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import Es_dnevniks.entities.Semester;
-
 
 public class SubjectEntityDTO {
 	
@@ -19,8 +17,7 @@ public class SubjectEntityDTO {
 	@NotNull(message="fond must be provided")
 	@Max(value=40, message= "Max number class is 40")
 	protected Integer fond;
-	@NotNull(message="semester must be provided")
-	protected Semester semester;
+	
 	public String getName() {
 		return name;
 	}
@@ -33,23 +30,17 @@ public class SubjectEntityDTO {
 	public void setFond(Integer fond) {
 		this.fond = fond;
 	}
-	public Semester getSemester() {
-		return semester;
-	}
-	public void setSemester(Semester semester) {
-		this.semester = semester;
-	}
+	
 	public SubjectEntityDTO() {
 		super();
 	}
 	public SubjectEntityDTO(
 			@NotNull(message = "Name must be provided") @Size(min = 2, max = 30, message = "Name must be beetwen {min} and {max} characters long.") String name,
-			@NotNull(message = "fond must be provided") @Max(value = 40, message = "Max number class is 40") Integer fond,
-			@NotNull(message = "semester must be provided") Semester semester) {
+			@NotNull(message = "fond must be provided") @Max(value = 40, message = "Max number class is 40") Integer fond) {
 		super();
 		this.name = name;
 		this.fond = fond;
-		this.semester = semester;
 	}
+
 
 }

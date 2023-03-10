@@ -1,21 +1,16 @@
 package Es_dnevniks.services;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Es_dnevniks.controllers.util.RESTError;
 import Es_dnevniks.entities.MarkEntity;
-import Es_dnevniks.entities.MarkSubject;
 import Es_dnevniks.entities.StudentEntity;
-import Es_dnevniks.entities.StudentMark;
 import Es_dnevniks.entities.StudentSubject;
 import Es_dnevniks.entities.StudentSubjectMark;
 import Es_dnevniks.entities.SubjectEntity;
@@ -24,6 +19,8 @@ import Es_dnevniks.entities.dto.SubjectMarksDTO;
 import Es_dnevniks.mappers.MarkMapper;
 import Es_dnevniks.repository.MarkRepository;
 import Es_dnevniks.repository.StudentRepository;
+import Es_dnevniks.repository.StudentSubjectMarkRepository;
+import Es_dnevniks.repository.StudentSubjectRepository;
 import Es_dnevniks.repository.SubjectRepository;
 
 @Service
@@ -36,6 +33,10 @@ public class MarkServiceImpl implements MarkService {
 	StudentRepository studentRepository;
 	@Autowired
 	SubjectRepository subjectRepository;
+	@Autowired
+	StudentSubjectRepository studentSubjectRepository;
+	@Autowired
+	StudentSubjectMarkRepository studentSubjectMarkRepository;
 
 	@Override
 	public MarkEntityDTO addMark(MarkEntityDTO marks) {
@@ -56,6 +57,7 @@ public class MarkServiceImpl implements MarkService {
 		Optional<MarkEntity> markEntity = markRepository.findById(id);
 		if (!markEntity.isEmpty()) {
 			markRepository.delete(markEntity.get());
+			return markEntity.get();
 		}
 
 		throw new RESTError(1, "Mark not exists");
@@ -65,70 +67,23 @@ public class MarkServiceImpl implements MarkService {
 	@Override
 	public List<SubjectMarksDTO> marksForStudents(Integer id) throws RESTError {
 		StudentEntity student = studentRepository.findById(id).get();
-		List<StudentSubjectMark> studentSubjects = student.getStudentSubjectMark();
-		List<SubjectEntity> subjects = new ArrayList<SubjectEntity>();
-		List<SubjectMarksDTO> subjectMarksDto = new ArrayList<SubjectMarksDTO>();
-		List<MarkEntity> marks = new ArrayList<MarkEntity>();
-		SubjectMarksDTO smDTO = new SubjectMarksDTO();
-		for(StudentSubjectMark ssm : studentSubjects) {
-			SubjectEntity subject = subjectRepository.findById(ssm.getSubject().getId()).get();
-			subjects.add(subject);smDTO.setSubject(subject.getName());		
-			marks.add(ssm.getMark());
 			
-			
-			
-			smDTO.setMarks(marks);
-			
-			subjectMarksDto.add(smDTO);
-			smDTO = new SubjectMarksDTO();
-		}
-//		for(SubjectEntity s : subjects) {
-//			List<MarkSubject> ms = s.getMarkSubject();
-//			SubjectMarksDTO smDTO = new SubjectMarksDTO();
-//
-//			smDTO.setSubject(s.getName());
-//			for (MarkSubject m : ms) {
-//				marks.add(m.getMark());
-//				smDTO.setMarks(marks);
-//
-//			}
-//			subjectMarksDto.add(smDTO);
-//		}
+		List<StudentSubject> studentSubject = studentSubjectRepository.findByStudent(student);
+		List<SubjectEntity> subjects = studentSubject.stream().map(StudentSubject::getSubject).collect(Collectors.toList());
+		List<SubjectMarksDTO> subjectMarksDTOs = new ArrayList<SubjectMarksDTO>();
 		
-//		StudentEntity student = studentRepository.findById(id).get();
-//		List<StudentMark> marks = student.getStudentMark();
-//		List<StudentSubject> studentSubjects = student.getStudentSubj();
-//		List<SubjectEntity> subjects = new ArrayList<SubjectEntity>();
-//
-//		for (StudentSubject ss : studentSubjects) {
-//			subjects.add(ss.getSubject());
-//		}
-//
-//		List<MarkEntity> markEntity = new ArrayList<MarkEntity>();
-//
-//		List<SubjectMarksDTO> subjectMarksDto = new ArrayList<SubjectMarksDTO>();
-//		for (SubjectEntity s : subjects) {
-//			List<MarkSubject> ms = s.getMarkSubject();
-//			SubjectMarksDTO smDTO = new SubjectMarksDTO();
-//
-//			smDTO.setSubject(s.getName());
-//			for (MarkSubject m : ms) {
-//				markEntity.add(m.getMark());
-//				smDTO.setMarks(markEntity);
-//
-//			}
-//			subjectMarksDto.add(smDTO);
-//		}
-
-//		System.out.println(Arrays.asList(subjects));
-//		if(marks.isEmpty()) {
-//		throw new RESTError(1,"Mark not exists");
-//		}
-
-//		for(StudentMark s:marks) {
-//			markEntity.add(s.getMark());
-//		}
-		return subjectMarksDto;
+		for(SubjectEntity s : subjects) {
+			
+			List<StudentSubjectMark> marks = studentSubjectMarkRepository.findByStudentAndSubject(student, s);
+			List<MarkEntity> marksStudent = marks.stream().map(StudentSubjectMark::getMark).collect(Collectors.toList());
+			
+			SubjectMarksDTO subjectMarksDto = new SubjectMarksDTO();
+			subjectMarksDto.setSubject(s.getName());
+			subjectMarksDto.setMarks(marksStudent);
+			subjectMarksDTOs.add(subjectMarksDto);
+		}
+	
+		return subjectMarksDTOs;
 	}
 
 }

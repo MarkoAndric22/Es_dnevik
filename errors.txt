@@ -1,0 +1,64 @@
+Mark doesnt exist
+Mark doesnt exist
+Password must have 5 or more letters
+Password must have 5 or more letters
+Password must have 5 or more letters
+Password must have 5 or more letters
+text/txt
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Teacher can not give mark to that student
+Teacher can not give mark to that student
+Teacher can not give mark to that student
+Teacher can not give mark to that student
+Teacher can not give mark to that student
+Email must be unique
+Name must be provided
+Name must be beetwen 2 and 30 characters long. Name must be provided
+Name must be provided
+Email cant modify,  must be unique
+Email must be provided
+Email cant modify,  must be unique
+Email cant modify,  must be unique
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Teacher can not give mark to that student for that subject
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Student doesnt exist
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Teacher is not allowed to insert that mark
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Subject is not allowed for that student
+Subject is not allowed for that student
+Subject is not allowed for that student

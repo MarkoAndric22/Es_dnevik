@@ -1,13 +1,8 @@
 package Es_dnevniks.entities.dto;
 
-
-
 import Es_dnevniks.entities.MarkEnum;
 
-
-
 public class MarkEntityDTO {
-	
 
 	MarkEnum marks;
 

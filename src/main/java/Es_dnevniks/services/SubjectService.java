@@ -6,9 +6,9 @@ import Es_dnevniks.entities.dto.SubjectEntityDTO;
 
 public interface SubjectService {
 	
-	public SubjectEntity addUser(SubjectEntityDTO subjects) throws RESTError;
+	public SubjectEntityDTO add(SubjectEntityDTO subjects);
 	
-	public SubjectEntity modify(Integer id, SubjectEntityDTO subjects) throws RESTError;
+	public SubjectEntityDTO modify(Integer id, SubjectEntityDTO subjects) throws RESTError;
 	
 	public SubjectEntity delete(Integer id) throws RESTError;
 

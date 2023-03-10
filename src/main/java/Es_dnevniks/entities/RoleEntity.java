@@ -37,6 +37,46 @@ public class RoleEntity {
 	CascadeType.ALL })
 	
 	private List<UserEntity> users = new ArrayList<>();
+
+	public RoleEntity(Integer id, @NotNull(message = "name must be provided") String name, List<UserEntity> users) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.users = users;
+	}
+
+	public RoleEntity(@NotNull(message = "name must be provided") String name) {
+		super();
+		this.name = name;
+	}
+
+	public RoleEntity() {
+		super();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<UserEntity> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
+	}
 	
 	
 	

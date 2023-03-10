@@ -4,7 +4,6 @@ import java.util.List;
 
 import Es_dnevniks.controllers.util.RESTError;
 import Es_dnevniks.entities.MarkEntity;
-import Es_dnevniks.entities.StudentEntity;
 import Es_dnevniks.entities.dto.MarkEntityDTO;
 import Es_dnevniks.entities.dto.SubjectMarksDTO;
 

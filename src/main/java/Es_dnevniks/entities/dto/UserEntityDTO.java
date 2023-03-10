@@ -1,7 +1,6 @@
 package Es_dnevniks.entities.dto;
 
 import javax.persistence.Column;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -11,7 +10,7 @@ import Es_dnevniks.entities.RoleEntity;
 
 public class UserEntityDTO {
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique = true)
 	@NotNull(message="username must be provided")
 	@Size(min=5,max=20, message= "username must be beetwen {min} and {max} characters long.")
 	protected String username;
@@ -28,7 +27,7 @@ public class UserEntityDTO {
 	
 	@Column(nullable=false)
 	@NotNull(message="Password must be provided")
-	@Min(value =5, message= "Password must have 5 or more letters")
+	@Size(min =5, message= "Password must have 5 or more letters")
 	protected String password;
 	
 	protected String repeatedPassword;
@@ -36,7 +35,7 @@ public class UserEntityDTO {
 	@Column(name="role_name")
 	protected RoleEntity role_name;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique = true)
 	@NotNull(message="Email must be provided")
 	@Size(min=2,max=30, message= "Email must be beetwen {min} and {max} characters long.")
 	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
@@ -47,7 +46,7 @@ public class UserEntityDTO {
 			@NotNull(message = "username must be provided") @Size(min = 5, max = 20, message = "username must be beetwen {min} and {max} characters long.") String username,
 			@NotNull(message = "First name must be provided") @Size(min = 2, max = 30, message = "First name must be beetwen {min} and {max} characters long.") String first_name,
 			@NotNull(message = "Last name must be provided") @Size(min = 2, max = 30, message = "Last name must be beetwen {min} and {max} characters long.") String lastName,
-			@NotNull(message = "Password must be provided") @Min(value = 5, message = "Password must have 5 or more letters") String password,
+			@NotNull(message = "Password must be provided") @Size(min = 5, message = "Password must have 5 or more letters") String password,
 			String repeatedPassword,
 			@NotNull(message = "Email must be provided") @Size(min = 2, max = 30, message = "Email must be beetwen {min} and {max} characters long.") @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Email is not valid.") String email) {
 		super();
@@ -115,7 +114,7 @@ public class UserEntityDTO {
 			@NotNull(message = "username must be provided") @Size(min = 5, max = 20, message = "username must be beetwen {min} and {max} characters long.") String username,
 			@NotNull(message = "First name must be provided") @Size(min = 2, max = 30, message = "First name must be beetwen {min} and {max} characters long.") String first_name,
 			@NotNull(message = "Last name must be provided") @Size(min = 2, max = 30, message = "Last name must be beetwen {min} and {max} characters long.") String lastName,
-			@NotNull(message = "Password must be provided") @Min(value = 5, message = "Password must have 5 or more letters") String password,
+			@NotNull(message = "Password must be provided") @Size(min = 5, message = "Password must have 5 or more letters") String password,
 			String repeatedPassword, RoleEntity role_name,
 			@NotNull(message = "Email must be provided") @Size(min = 2, max = 30, message = "Email must be beetwen {min} and {max} characters long.") @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Email is not valid.") String email) {
 		super();
@@ -140,7 +139,7 @@ public class UserEntityDTO {
 			@NotNull(message = "username must be provided") @Size(min = 5, max = 20, message = "username must be beetwen {min} and {max} characters long.") String username,
 			@NotNull(message = "First name must be provided") @Size(min = 2, max = 30, message = "First name must be beetwen {min} and {max} characters long.") String first_name,
 			@NotNull(message = "Last name must be provided") @Size(min = 2, max = 30, message = "Last name must be beetwen {min} and {max} characters long.") String lastName,
-			@NotNull(message = "Password must be provided") @Min(value = 5, message = "Password must have 5 or more letters") String password,
+			@NotNull(message = "Password must be provided") @Size(min = 5, message = "Password must have 5 or more letters") String password,
 			@NotNull(message = "Email must be provided") @Size(min = 2, max = 30, message = "Email must be beetwen {min} and {max} characters long.") @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Email is not valid.") String email,
 			RoleEntity role_name) {
 		super();

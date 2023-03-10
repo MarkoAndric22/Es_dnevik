@@ -34,38 +34,30 @@ public class ClassEntity {
 	protected String name;
 	
 	@Column(nullable=false)
-	@NotNull(message="Name must be provided")
+	@NotNull(message="Semester must be provided")
 	protected Semester semester;
 	
-	@OneToMany(mappedBy="classes", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
-	@JsonIgnore
-	List <SubjectClass>subjectClass;
 	
 	@OneToMany(mappedBy="classes", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <StudentEntity>student;
 
+	@OneToMany(mappedBy="classes", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+	@JsonIgnore
+	List <TeacherClass>teacherClass;
+
+	
+
 	public ClassEntity(Integer id,
 			@NotNull(message = "Name must be provided") @Size(min = 2, max = 30, message = "Name must be beetwen {min} and {max} characters long.") String name,
-			@NotNull(message = "Name must be provided") Semester semester, List<SubjectClass> subjectClass,
-			List<StudentEntity> student) {
+			@NotNull(message = "Semester must be provided") Semester semester, List<StudentEntity> student,
+			List<TeacherClass> teacherClass) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.semester = semester;
-		this.subjectClass = subjectClass;
 		this.student = student;
-	}
-
-	public ClassEntity(
-			@NotNull(message = "Name must be provided") @Size(min = 2, max = 30, message = "Name must be beetwen {min} and {max} characters long.") String name,
-			@NotNull(message = "Name must be provided") Semester semester, List<SubjectClass> subjectClass,
-			List<StudentEntity> student) {
-		super();
-		this.name = name;
-		this.semester = semester;
-		this.subjectClass = subjectClass;
-		this.student = student;
+		this.teacherClass = teacherClass;
 	}
 
 	public ClassEntity(
@@ -104,13 +96,6 @@ public class ClassEntity {
 		this.semester = semester;
 	}
 
-	public List<SubjectClass> getSubjectClass() {
-		return subjectClass;
-	}
-
-	public void setSubjectClass(List<SubjectClass> subjectClass) {
-		this.subjectClass = subjectClass;
-	}
 
 	public List<StudentEntity> getStudent() {
 		return student;
@@ -118,6 +103,15 @@ public class ClassEntity {
 
 	public void setStudent(List<StudentEntity> student) {
 		this.student = student;
+	}
+
+
+	public List<TeacherClass> getTeacherClass() {
+		return teacherClass;
+	}
+
+	public void setTeacherClass(List<TeacherClass> teacherClass) {
+		this.teacherClass = teacherClass;
 	}
 
 	

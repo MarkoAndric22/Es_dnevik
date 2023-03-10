@@ -160,8 +160,7 @@ public class TeacherServiceImpl implements TeacherService {
 			List<ClassEntity> classes = teacherClass.stream().map(TeacherClass::getClasses).collect(Collectors.toList());
 
 			if(!classes.contains(student.getClasses())
-					&& (!userRepository.findById(t.getId()).get().getRole().getName().equals(User_Role.ROLE_ADMIN.toString()) || !userRepository.findById(t.getId()).get().getRole().getName().equals(User_Role.ROLE_TEACHER.toString()))
-						) {
+					|| (!userRepository.findById(t.getId()).get().getRole().getName().equals(User_Role.ROLE_ADMIN.toString()))){
 					throw new RESTError(1,"Teacher is not allowed to insert that mark");
 				} 
 					teacher = t;

@@ -63,3 +63,7 @@ Subject is not allowed for that student
 Subject is not allowed for that student
 Subject is not allowed for that student
 Subject is not allowed for that student
+Email must be unique
+Email must be unique
+Email must be beetwen 2 and 30 characters long.
+Teacher is not allowed to insert that mark

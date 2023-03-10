@@ -62,3 +62,4 @@ Teacher is not allowed to insert that mark
 Subject is not allowed for that student
 Subject is not allowed for that student
 Subject is not allowed for that student
+Subject is not allowed for that student

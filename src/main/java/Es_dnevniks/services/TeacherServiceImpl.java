@@ -153,14 +153,13 @@ public class TeacherServiceImpl implements TeacherService {
 		
 		List<NasPredajuPred> teacherSubject = subject.getNasPredajuPreds();
 		List<TeacherEntity> teachers = teacherSubject.stream().map(NasPredajuPred::getTeacher).collect(Collectors.toList());
-		List<SubjectEntity> subjectForTeacher = teacherSubject.stream().map(NasPredajuPred::getSubject).collect(Collectors.toList());
 		
 		TeacherEntity teacher = new TeacherEntity();
 		for(TeacherEntity t:teachers) {
 			List<TeacherClass> teacherClass = t.getTeacherClass();
 			List<ClassEntity> classes = teacherClass.stream().map(TeacherClass::getClasses).collect(Collectors.toList());
 
-			if(!(classes.contains(student.getClasses()) && subjectForTeacher.contains(subject))
+			if(!classes.contains(student.getClasses())
 					&& (!userRepository.findById(t.getId()).get().getRole().getName().equals(User_Role.ROLE_ADMIN.toString()) || !userRepository.findById(t.getId()).get().getRole().getName().equals(User_Role.ROLE_TEACHER.toString()))
 						) {
 					throw new RESTError(1,"Teacher is not allowed to insert that mark");

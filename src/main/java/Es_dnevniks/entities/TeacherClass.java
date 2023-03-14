@@ -11,8 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="TeacherClass")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class TeacherClass {
 	
 	@Id
@@ -20,13 +23,11 @@ public class TeacherClass {
 	@Column(name = "teacherClass_id")
 	protected Integer id;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name ="teacher_id")
 	TeacherEntity teacher;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
-
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
 	ClassEntity classes;
 

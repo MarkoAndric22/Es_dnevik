@@ -2,6 +2,7 @@ package Es_dnevniks.controllers;
 
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import Es_dnevniks.controllers.util.RESTError;
+import Es_dnevniks.entities.TeacherEntity;
+import Es_dnevniks.entities.UserEntity;
 import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.exception.FileErrors;
+import Es_dnevniks.repository.UserRepository;
 import Es_dnevniks.services.TeacherService;
 import Es_dnevniks.utils.UserCustomValidator;
 
@@ -31,6 +35,9 @@ public class TeacherController {
 	
 	@Autowired
 	TeacherService teacherService;
+	
+	@Autowired
+	UserRepository userRepository;
 	@Autowired
 	UserCustomValidator userValidator;
 	
@@ -59,9 +66,11 @@ public class TeacherController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/teacherEvaluatesStudent")
 	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
-	public ResponseEntity<?> teacherEvaluatesStudent(@RequestParam Integer studentId, @RequestParam Integer markId, @RequestParam Integer subjectId) throws Exception {
+	public ResponseEntity<?> teacherEvaluatesStudent(HttpServletRequest request, @RequestParam Integer studentId, @RequestParam Integer markId, @RequestParam Integer subjectId) throws Exception {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(teacherService.teacherEvaluatesStudent(studentId, markId, subjectId));
+			String email = request.getUserPrincipal().getName();
+			UserEntity teacher = userRepository.findByEmail(email).get();
+			return ResponseEntity.status(HttpStatus.OK).body(teacherService.teacherEvaluatesStudent(teacher.getId(), studentId, markId, subjectId));
 		}catch (RESTError e) {
 			FileErrors.appendToFile(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -102,10 +111,12 @@ public class TeacherController {
 
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getMarks/{id}")
-	@Secured({"ROLE_ADMIN","ROLE_TEACHER"})
-	public ResponseEntity<?> findMarksByStudents(@PathVariable Integer id) throws RESTError {
-		return ResponseEntity.status(HttpStatus.OK).body(teacherService.teacherMarks(id));
+	@RequestMapping(method = RequestMethod.GET, value = "/getMarks")
+	@Secured("ROLE_TEACHER")
+	public ResponseEntity<?> findMarksByStudents(HttpServletRequest request) throws RESTError {
+		String email = request.getUserPrincipal().getName();
+		UserEntity user = userRepository.findByEmail(email).get();
+		return ResponseEntity.status(HttpStatus.OK).body(teacherService.teacherMarks(user.getId()));
 	}
 	
 	

@@ -12,8 +12,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="predaju")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class NasPredajuPred {
 	
 
@@ -22,12 +25,12 @@ public class NasPredajuPred {
 	@Column(name = "predaju_id")
 	protected Integer id;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 
 	@JoinColumn(name = "teacher_id")
 	TeacherEntity teacher;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 
 	@JoinColumn(name = "subject_id")
 	SubjectEntity subject;

@@ -67,3 +67,12 @@ Email must be unique
 Email must be unique
 Email must be beetwen 2 and 30 characters long.
 Teacher is not allowed to insert that mark
+Parent not exists
+Student not exists
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Student not exists
+Student not exists
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark

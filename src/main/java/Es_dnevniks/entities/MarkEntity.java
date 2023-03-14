@@ -24,7 +24,7 @@ public class MarkEntity {
 	
 	MarkEnum marks;
 
-	@OneToMany(mappedBy="mark", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="mark", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <StudentSubjectMark> studentSubjectMark;
 	

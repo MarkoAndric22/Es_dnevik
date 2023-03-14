@@ -34,7 +34,7 @@ public class RoleEntity {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = {
-	CascadeType.ALL })
+	CascadeType.REFRESH })
 	
 	private List<UserEntity> users = new ArrayList<>();
 

@@ -49,13 +49,13 @@ public class TeacherEntity {
 	@JsonIgnore
 	List <NasPredajuPred>nasPredajuPreds;
 	
-	@OneToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@OneToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id")
 	@JsonIgnore
 	UserEntity user;
 	
-	@OneToMany(mappedBy="teacher", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="teacher", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <TeacherClass>teacherClass;
 

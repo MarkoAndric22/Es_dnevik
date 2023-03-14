@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.crypto.SecretKey;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,11 @@ import Es_dnevniks.entities.dto.UserDTO;
 import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.exception.FileErrors;
 import Es_dnevniks.repository.UserRepository;
+import Es_dnevniks.services.TeacherService;
 import Es_dnevniks.services.UserService;
 import Es_dnevniks.utils.Encryption;
 import Es_dnevniks.utils.UserCustomValidator;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 
@@ -45,6 +48,8 @@ public class UserController {
 	private UserRepository userRepository;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	TeacherService teacherService;
 	@Autowired
 	UserCustomValidator userValidator;
 	@Autowired
@@ -194,5 +199,13 @@ public class UserController {
 			}
 
 		}
-	}
+		
+		
+		@RequestMapping(method = RequestMethod.GET, value = "/getMarks/{id}")
+		@Secured("ROLE_ADMIN")
+		public ResponseEntity<?> findMarksByStudents(@PathVariable Integer id) throws RESTError {
+			return ResponseEntity.status(HttpStatus.OK).body(teacherService.teacherMarks(id));
+		}
+
+}
 

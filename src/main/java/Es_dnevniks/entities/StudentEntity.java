@@ -50,15 +50,15 @@ public class StudentEntity {
 	@JsonIgnore
 	List <StudentSubjectMark> studentSubjectMark;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name = "classes_id", nullable = true)
 	ClassEntity classes;
 	
-	@OneToMany(mappedBy="student", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="student", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <ParentStudent>parentStudents;
 
-	@OneToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@OneToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id")
 	@JsonIgnore

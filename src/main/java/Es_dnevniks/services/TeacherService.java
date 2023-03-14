@@ -18,7 +18,7 @@ public interface TeacherService {
 	
 	public TeacherEntity delete(Integer id) throws RESTError;
 	
-	public StudentMarksDTO teacherEvaluatesStudent (Integer studentId, Integer markId, Integer subjectId)  throws RESTError,Exception;
+	public StudentMarksDTO teacherEvaluatesStudent (Integer teacherId, Integer studentId, Integer markId, Integer subjectId)  throws RESTError,Exception;
 	
 	public List<TeacherMarksDTO> teacherMarks(Integer teacher_id) throws RESTError;
 	

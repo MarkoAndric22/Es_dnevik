@@ -12,20 +12,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="Family")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class ParentStudent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "family_id")
 	protected Integer id;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 
 	@JoinColumn(name = "parent_id")
 	ParentEntity parent;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 
 	@JoinColumn(name = "student_id")
 	StudentEntity student;

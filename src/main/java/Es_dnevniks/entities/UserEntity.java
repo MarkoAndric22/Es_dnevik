@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class UserEntity {
 	
 	@Id
@@ -53,23 +52,23 @@ public class UserEntity {
 	message="Email is not valid.")
 	protected String email;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "role")
 	@JsonIgnore
 	protected RoleEntity role;
 
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.REFRESH)
     @PrimaryKeyJoinColumn
     @JsonIgnore
     StudentEntity student;
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.REFRESH)
     @PrimaryKeyJoinColumn
     @JsonIgnore
     TeacherEntity teacher;
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.REFRESH)
     @PrimaryKeyJoinColumn
     @JsonIgnore
     ParentEntity parent;

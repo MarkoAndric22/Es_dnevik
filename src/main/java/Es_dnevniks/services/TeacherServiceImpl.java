@@ -136,7 +136,7 @@ public class TeacherServiceImpl implements TeacherService {
 	
 //	nastavnik daje ocenu uceniku
 	@Override
-	public StudentMarksDTO teacherEvaluatesStudent(Integer studentId, Integer markId, Integer subjectId) throws Exception {
+	public StudentMarksDTO teacherEvaluatesStudent(Integer teacherId, Integer studentId, Integer markId, Integer subjectId) throws Exception {
 		StudentMarksDTO sm = new StudentMarksDTO();
 		if(!studentRepository.existsById(studentId)) {
 			throw new RESTError(1,"Student doesnt exist");
@@ -155,22 +155,37 @@ public class TeacherServiceImpl implements TeacherService {
 		List<TeacherEntity> teachers = teacherSubject.stream().map(NasPredajuPred::getTeacher).collect(Collectors.toList());
 		
 		TeacherEntity teacher = new TeacherEntity();
-		for(TeacherEntity t:teachers) {
-			List<TeacherClass> teacherClass = t.getTeacherClass();
+		UserEntity user = new UserEntity();
+		if(teacherRepository.findById(teacherId).isPresent()) {
+			teacher = teacherRepository.findById(teacherId).get();
+			List<TeacherClass> teacherClass = teacher.getTeacherClass();
 			List<ClassEntity> classes = teacherClass.stream().map(TeacherClass::getClasses).collect(Collectors.toList());
-
-			if(!classes.contains(student.getClasses())
-					|| (!userRepository.findById(t.getId()).get().getRole().getName().equals(User_Role.ROLE_ADMIN.toString()))){
-					throw new RESTError(1,"Teacher is not allowed to insert that mark");
-				} 
-					teacher = t;
+			if(teachers.contains(teacher) && classes.contains(student.getClasses())){
 					sm.setStudent(student.getFirst_name() + " " + student.getLast_name());
 					sm.setSubject(subject.getName());
 					sm.setMark(mark.getMarks());
 					StudentSubjectMark studentSubjectMark =  new StudentSubjectMark(student, subject, mark);
 					studentSubjectMarkRepository.save(studentSubjectMark);
-			}
-			
+					
+				} else {
+					throw new RESTError(1,"Teacher is not allowed to insert that mark");
+				}
+		}
+		else if(userRepository.findById(teacherId).isPresent()) {
+			user = userRepository.findById(teacherId).get();
+			if(user.getRole().getName().equals(User_Role.ROLE_ADMIN.toString())){
+					
+					sm.setStudent(student.getFirst_name() + " " + student.getLast_name());
+					sm.setSubject(subject.getName());
+					sm.setMark(mark.getMarks());
+					StudentSubjectMark studentSubjectMark =  new StudentSubjectMark(student, subject, mark);
+					studentSubjectMarkRepository.save(studentSubjectMark);
+					
+				} else {
+					throw new RESTError(1,"Teacher is not allowed to insert that mark");
+				}
+		} 
+		
 			
 
 		List<ParentStudent> parentStudent = student.getParentStudents();
@@ -186,7 +201,7 @@ public class TeacherServiceImpl implements TeacherService {
 			emailService.sendSimpleMessage(email);
 		}
 		
-		
+	
 		
 		return sm;
 	}

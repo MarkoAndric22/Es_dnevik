@@ -47,11 +47,11 @@ public class ParentEntity {
 	protected String email;
 
 	
-	@OneToMany(mappedBy="parent", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="parent", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <ParentStudent>parentStudents;
 	
-	@OneToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@OneToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id")
 	@JsonIgnore

@@ -42,7 +42,7 @@ public class ClassEntity {
 	@JsonIgnore
 	List <StudentEntity>student;
 
-	@OneToMany(mappedBy="classes", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="classes", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <TeacherClass>teacherClass;
 

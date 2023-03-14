@@ -12,8 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="subjectForStudent")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class StudentSubject {
 
 	@Id
@@ -21,12 +24,12 @@ public class StudentSubject {
 	@Column(name = "subjectSid")
 	protected Integer id;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 
 	@JoinColumn(name = "student_id")
 	StudentEntity student;
 	
-	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 
 	@JoinColumn(name = "subject_id")
 	SubjectEntity subject;

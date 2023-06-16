@@ -42,7 +42,7 @@ public class UserEntity {
 	@Column(nullable=false,name="password")
 	@NotNull(message="Password must be provided")
 	@Size(min=5,max=100, message= "password must be beetwen {min} and {max} characters long.")
-	@JsonIgnore
+//	@JsonIgnore
 	protected String password;
 	
 	@Column(nullable=false,name = "email", unique = true)
@@ -54,7 +54,7 @@ public class UserEntity {
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "role")
-	@JsonIgnore
+//	@JsonIgnore
 	protected RoleEntity role;
 
 	

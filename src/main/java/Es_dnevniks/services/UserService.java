@@ -23,8 +23,12 @@ public interface UserService {
 	
 	public NasPredajuPred adminGivesSubjectToTeacher(Integer teacherId, Integer subjectId) throws RESTError;
 	
+	public NasPredajuPred adminRemovesSubjectFromTeacher(Integer teacherId, Integer subjectId);
+	
 	public StudentClassDTO adminGivesClassToStudent(Integer classId, Integer studentId)throws RESTError;
 	
 	public TeacherClass adminGivesClasstoTeacher(Integer classId, Integer teacherId)throws RESTError;
+	
+	public UserEntity findById(Integer id);
 
 }

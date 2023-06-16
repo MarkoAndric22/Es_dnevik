@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ import Es_dnevniks.entities.dto.ClassEntityDTO;
 import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.exception.FileErrors;
 import Es_dnevniks.services.ClassService;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "/es_dnevnik/class")
 public class ClassController {

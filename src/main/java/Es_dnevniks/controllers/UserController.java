@@ -18,6 +18,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,7 @@ import Es_dnevniks.entities.UserEntity;
 import Es_dnevniks.entities.dto.UserDTO;
 import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.exception.FileErrors;
+import Es_dnevniks.repository.RoleRepository;
 import Es_dnevniks.repository.UserRepository;
 import Es_dnevniks.services.TeacherService;
 import Es_dnevniks.services.UserService;
@@ -39,7 +41,7 @@ import Es_dnevniks.utils.UserCustomValidator;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "/es_dnevnik/admin")
 public class UserController {
@@ -50,6 +52,8 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	TeacherService teacherService;
+	@Autowired
+	RoleRepository roleRepository;
 	@Autowired
 	UserCustomValidator userValidator;
 	@Autowired
@@ -93,7 +97,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
-	public ResponseEntity<?> login(@RequestParam("user") String email, @RequestParam("password")
+	public ResponseEntity<?> login(@RequestParam("email") String email, @RequestParam("password")
 	String pwd) {
 		UserEntity userEntity = userRepository.findByEmail(email).get();
 		if (userEntity != null && Encryption.validatePassword(pwd, userEntity.getPassword())) {
@@ -105,6 +109,17 @@ public class UserController {
 		}
 		
 		return new ResponseEntity<>("Wrong credentials", HttpStatus.UNAUTHORIZED);
+	}
+	
+	@RequestMapping(path = "/findByEmail/{email}", method = RequestMethod.GET)
+	public ResponseEntity<?> login(@PathVariable String email){
+		UserEntity user = userRepository.findByEmail(email).get();
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+	
+	@RequestMapping(path = "/roles", method = RequestMethod.GET)
+	public ResponseEntity<?> findAllRoles(){
+		return new ResponseEntity<>(roleRepository.findAll(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(path = "/users", method = RequestMethod.GET)
@@ -132,7 +147,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/teacherSubject")
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
 	public ResponseEntity<?> adminGivesSubjectToTeacher(@RequestParam Integer teacherId, @RequestParam Integer subjectId) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(userService.adminGivesSubjectToTeacher(teacherId, subjectId));
@@ -141,6 +156,13 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 		
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/teacherSubjectDelete")
+	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+	public ResponseEntity<?> adminRemovesSubjectFromTeacher(@RequestParam Integer teacherId, @RequestParam Integer subjectId) {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.adminRemovesSubjectFromTeacher(teacherId, subjectId));
+	
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/classToStudent")
@@ -205,6 +227,11 @@ public class UserController {
 		@Secured("ROLE_ADMIN")
 		public ResponseEntity<?> findMarksByStudents(@PathVariable Integer id) throws RESTError {
 			return ResponseEntity.status(HttpStatus.OK).body(teacherService.teacherMarks(id));
+		}
+		
+		@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+		public ResponseEntity<?> findUserById(@PathVariable Integer id)  {
+			return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
 		}
 
 }

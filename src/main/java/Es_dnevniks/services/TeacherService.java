@@ -28,4 +28,6 @@ public interface TeacherService {
 	
 	public List<TeacherMarksDTO> search(Integer teacher_id, String subject) throws RESTError;
 	
+	public List<TeacherEntity> teachersBySubject(Integer subjectId);
+	
 }

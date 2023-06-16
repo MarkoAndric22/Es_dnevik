@@ -11,6 +11,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.exception.FileErrors;
 import Es_dnevniks.services.StudentService;
 import Es_dnevniks.utils.UserCustomValidator;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "/es_dnevnik/student")
 public class StudentController {

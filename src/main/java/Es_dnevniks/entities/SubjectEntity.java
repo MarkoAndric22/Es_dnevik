@@ -39,16 +39,16 @@ public class SubjectEntity {
 	protected Integer fond;
 	
 	
-	@OneToMany (mappedBy="subject", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany (mappedBy="subject", cascade = {CascadeType.REFRESH, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <NasPredajuPred>nasPredajuPreds;
 	
-	@OneToMany(mappedBy="subject", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="subject", cascade = {CascadeType.REFRESH, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <StudentSubject>studentSubject;
 
 
-	@OneToMany(mappedBy="subject", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="subject", cascade = {CascadeType.REFRESH, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <StudentSubjectMark> studentSubjectMark;
 

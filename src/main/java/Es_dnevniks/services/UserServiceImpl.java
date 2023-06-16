@@ -173,4 +173,18 @@ public class UserServiceImpl implements UserService {
 		return teacherClassRepository.save(teacherClass);
 	}
 
+	@Override
+	public UserEntity findById(Integer id) {
+		return userRepository.findById(id).get();
+	}
+
+	@Override
+	public NasPredajuPred adminRemovesSubjectFromTeacher(Integer teacherId, Integer subjectId) {
+		SubjectEntity subject = subjectRepository.findById(subjectId).get();
+		TeacherEntity teacher = teacherRepository.findById(teacherId).get();
+		NasPredajuPred predaju = nasPredajuPredRepository.findByTeacherAndSubject(teacher, subject);
+		nasPredajuPredRepository.deleteById(predaju.getId());
+		return predaju;
+	}
+
 }

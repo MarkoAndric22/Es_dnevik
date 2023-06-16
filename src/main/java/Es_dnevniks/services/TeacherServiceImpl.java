@@ -105,8 +105,11 @@ public class TeacherServiceImpl implements TeacherService {
 			UserEntity u = userRepository.findByEmail(teacheres.getEmail()).get();
 			RoleEntity r = roleRepository.findByName("ROLE_TEACHER");
 			u.setName(teacheres.getFirst_name());
-			u.setLastName(teacheres.getLastName());		
-			u.setPassword(Encryption.getPassEncoded(teacheres.getPassword()));
+			u.setLastName(teacheres.getLastName());	
+			if(!teacheres.getPassword().equals(u.getPassword())) {
+				u.setPassword(Encryption.getPassEncoded(teacheres.getPassword()));
+			}
+			
 			u.setRole(r);
 			TeacherEntity p  = teacherRepository.findById(id).get();
 			p.setFirst_name(teacheres.getFirst_name());
@@ -281,9 +284,13 @@ public class TeacherServiceImpl implements TeacherService {
 		return tmList;
 	}
 
-
-	
-	
+	@Override
+	public List<TeacherEntity> teachersBySubject(Integer subjectId){
+		SubjectEntity subject = subjectRepository.findById(subjectId).get();
+		List<TeacherEntity> teachers = subject.getNasPredajuPreds().stream().map(NasPredajuPred::getTeacher).collect(Collectors.toList());
+		return teachers;
+		
+	}
 
 
 }

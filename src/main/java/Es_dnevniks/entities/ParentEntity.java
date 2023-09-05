@@ -30,20 +30,15 @@ public class ParentEntity {
 	protected Integer id;
 	
 	@Column(nullable=false)
-	@NotNull(message="First name must be provided")
-	@Size(min=2,max=30, message= "First name must be beetwen {min} and {max} characters long.")
+	
 	protected String first_name;
 	
 	@Column(nullable=false)
-	@NotNull(message="Last name must be provided")
-	@Size(min=2,max=30, message= "Last name must be beetwen {min} and {max} characters long.")
+	
 	protected String last_name;
 	
 	@Column(nullable=false, unique = true)
-	@NotNull(message="Email must be provided")
-	@Size(min=2,max=30, message= "Email must be beetwen {min} and {max} characters long.")
-	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
-	message="Email is not valid.")
+
 	protected String email;
 
 	

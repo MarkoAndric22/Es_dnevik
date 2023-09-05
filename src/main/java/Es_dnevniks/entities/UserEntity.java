@@ -16,40 +16,35 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class UserEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
+	@Column(name = "id")
 	protected Integer id;
 	
-	@Column(nullable=false,name = "name")
-	@NotNull(message="name must be provided")
+	@Column(nullable=false,name = "first_name")
+	
 	protected String name;
 	
 	@Column(nullable=false,name = "last_name")
-	@NotNull(message="Last name must be provided")
+	
 	protected String lastName;
 	
 	@Column(nullable=false, unique = true)
-	@NotNull(message="username must be provided")
-	@Size(min=5,max=20, message= "username must be beetwen {min} and {max} characters long.")
+	
+	
 	protected String username;
 	
 	@Column(nullable=false,name="password")
-	@NotNull(message="Password must be provided")
-	@Size(min=5,max=100, message= "password must be beetwen {min} and {max} characters long.")
+	
 //	@JsonIgnore
 	protected String password;
 	
 	@Column(nullable=false,name = "email", unique = true)
-	@NotNull(message="Email must be provided")
-	@Size(min=2,max=30, message= "Email must be beetwen {min} and {max} characters long.")
-	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
-	message="Email is not valid.")
+	
 	protected String email;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

@@ -1,5 +1,6 @@
 package Es_dnevniks.controllers;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -17,9 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import Es_dnevniks.controllers.util.RESTError;
+import Es_dnevniks.entities.StudentEntity;
+import Es_dnevniks.entities.dto.ParentStudentDTO;
 import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.exception.FileErrors;
 import Es_dnevniks.services.ParentService;
@@ -36,19 +40,20 @@ public class ParentController {
 	@InitBinder
 	protected void initBinder(final WebDataBinder binder)
 	{
-	binder.addValidators(userValidator);
+//	binder.addValidators(userValidator);
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.POST)
 	@Secured("ROLE_ADMIN")
-	public ResponseEntity<?> addParent(@Valid @RequestBody UserEntityDTO parent,BindingResult result)  {
+	public ResponseEntity<?> addParent(@Valid @RequestBody ParentStudentDTO parent,BindingResult result)  {
 		try {
-		if(result.hasErrors()) {
-			FileErrors.appendToFile(createErrorMessage(result));
-			return new ResponseEntity<>(createErrorMessage(result),HttpStatus.BAD_REQUEST);
-		}else {
-			userValidator.validate(parent, result);
-		}
+//		if(result.hasErrors()) {
+//			FileErrors.appendToFile(createErrorMessage(result));
+//			return new ResponseEntity<>(createErrorMessage(result),HttpStatus.BAD_REQUEST);
+//		}else {
+//			userValidator.validate(parent, result);
+//		}
 		return new ResponseEntity<>(parentService.addParent(parent), HttpStatus.OK);
 		}catch (RESTError e) {
 			FileErrors.appendToFile(e.getMessage());
@@ -60,6 +65,7 @@ public class ParentController {
 		return result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(" "));
 	}
 		
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> modifyParent(@PathVariable Integer id,@Valid @RequestBody UserEntityDTO parent,BindingResult result)  {
@@ -77,6 +83,7 @@ public class ParentController {
 		}
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> removeParent(@PathVariable Integer id)  {
@@ -89,10 +96,31 @@ public class ParentController {
 
 	}
 //	roditelj moze da vidi ocene svog deteta
-	@RequestMapping(method = RequestMethod.GET, value = "getMarks/{id}")
-	@Secured({"ROLE_ADMIN","ROLE_PARENT"})
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(method = RequestMethod.GET, value = "/getMarks/{id}")
+//	@Secured({"ROLE_ADMIN","ROLE_PARENT"})
 	public ResponseEntity<?> findMarksByStudents(@PathVariable Integer id) throws RESTError {
+		try {
 		return ResponseEntity.status(HttpStatus.OK).body(parentService.parentMarks(id));
+		}catch(RESTError e) {
+			FileErrors.appendToFile(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<?> getAllParent(){
+		return ResponseEntity.status(HttpStatus.OK).body(parentService.getAllParent());
+	}
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(method = RequestMethod.GET,value = "/{id}")
+	public ResponseEntity<?> getParentById(@PathVariable Integer id) throws RESTError{
+		try {
+		return ResponseEntity.status(HttpStatus.OK).body(parentService.getById(id));
+		}catch (RESTError e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 
 }

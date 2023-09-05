@@ -10,4 +10,6 @@ public interface StudentService {
 	public StudentEntityDTO addStudent(UserEntityDTO students)throws RESTError;
 	public StudentEntityDTO modify(Integer id, UserEntityDTO students) throws RESTError;
 	public StudentEntity delete(Integer id)throws RESTError;
+	public Iterable<StudentEntity> getAll();
+	public StudentEntity getById(Integer studentid)throws RESTError;;
 }

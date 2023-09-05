@@ -76,7 +76,7 @@ public class MarkController {
 	}
 //student moze da vidi svoje ocene
 	@RequestMapping(method = RequestMethod.GET, value = "studentMarks/{id}")
-	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
+//	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
 	public ResponseEntity<?> marksForStudents(@PathVariable Integer id) throws RESTError {
 		return ResponseEntity.status(HttpStatus.OK).body(markService.marksForStudents(id));
 	}

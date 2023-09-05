@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
@@ -30,13 +31,13 @@ public class StudentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Integer id;
-	
-	@Column(nullable=false,name="name_student")
+	@JsonProperty("first_name")
+	@Column(nullable=false,name="first_name")
 	@NotNull(message="First name must be provided")
 	@Size(min=2,max=30, message= "First name must be beetwen {min} and {max} characters long.")
 	protected String first_name;
-	
-	@Column(nullable=false,name="Last_name_student")
+	@JsonProperty("last_name")
+	@Column(nullable=false,name="last_name")
 	@NotNull(message="Last name must be provided")
 	@Size(min=2,max=30, message= "Last name must be beetwen {min} and {max} characters long.")
 	protected String last_name;
@@ -49,21 +50,30 @@ public class StudentEntity {
 	@OneToMany(mappedBy="student", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <StudentSubjectMark> studentSubjectMark;
-	
+	@JsonIgnore
 	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name = "classes_id", nullable = true)
 	ClassEntity classes;
 	
-	@OneToMany(mappedBy="student", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="student", cascade = {CascadeType.MERGE},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <ParentStudent>parentStudents;
 
 	@OneToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
     @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user")
 	@JsonIgnore
 	UserEntity user;
 	
+
+	public StudentEntity(Integer id,
+			@NotNull(message = "First name must be provided") @Size(min = 2, max = 30, message = "First name must be beetwen {min} and {max} characters long.") String first_name,
+			@NotNull(message = "Last name must be provided") @Size(min = 2, max = 30, message = "Last name must be beetwen {min} and {max} characters long.") String last_name) {
+		super();
+		this.id = id;
+		this.first_name = first_name;
+		this.last_name = last_name;
+	}
 
 	public StudentEntity(Integer id,
 			@NotNull(message = "First name must be provided") @Size(min = 2, max = 30, message = "First name must be beetwen {min} and {max} characters long.") String first_name,
@@ -173,6 +183,13 @@ public class StudentEntity {
 		this.studentSubjectMark = studentSubjectMark;
 	}
 
+	@Override
+	public String toString() {
+		return "StudentEntity [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + "]";
+	}
+
+	
+	
 
 
 	

@@ -1,7 +1,6 @@
 package Es_dnevniks.controllers;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import Es_dnevniks.controllers.util.RESTError;
 import Es_dnevniks.entities.SubjectEntity;
 import Es_dnevniks.entities.dto.SubjectEntityDTO;
-import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.exception.FileErrors;
 import Es_dnevniks.repository.SubjectRepository;
 import Es_dnevniks.services.SubjectService;
@@ -37,6 +35,8 @@ public class SubjectController {
 	@Autowired
 	SubjectRepository subjectRepository;
 	
+	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.POST)
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> add(@Valid @RequestBody SubjectEntityDTO subject, BindingResult result) throws RESTError {
@@ -52,7 +52,7 @@ public class SubjectController {
 		return result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(" "));
 
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> modifySubject(@PathVariable Integer id,@Valid @RequestBody SubjectEntityDTO subject,BindingResult result)  {
@@ -69,7 +69,7 @@ public class SubjectController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> removeSubject(@PathVariable Integer id)  {
@@ -81,7 +81,7 @@ public class SubjectController {
 		}
 
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<SubjectEntity>getAllSubject(){
 		Iterable<SubjectEntity>subject1= subjectRepository.findAll();
@@ -109,6 +109,25 @@ public class SubjectController {
 	@RequestMapping(method = RequestMethod.GET,value = "teacherDontHave/{teacherId}")
 	public ResponseEntity<?> subjectTeacherDontHave(@PathVariable Integer teacherId){
 		return ResponseEntity.status(HttpStatus.OK).body(subjectService.subjectTeacherDontHave(teacherId));
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,value = "subjectForStudent/{teacherId}")
+	public ResponseEntity<?> subjectForStudent(@PathVariable Integer teacherId){
+		return ResponseEntity.status(HttpStatus.OK).body(subjectService.subjectForStudent(teacherId));
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,value = "subjectForTeacher/{teacherId}")
+	public ResponseEntity<?> subjectForTeacher(@PathVariable Integer teacherId){
+		return ResponseEntity.status(HttpStatus.OK).body(subjectService.subjectForStudent(teacherId));
+	}
+	
+	@RequestMapping(method = RequestMethod.POST,value = "addSubjectTeacher")
+	public ResponseEntity<?> addSubjectTeacher(@RequestParam Integer teacherId,@RequestParam Integer subjectId){
+		return ResponseEntity.status(HttpStatus.OK).body(subjectService.addSubjectTeacher(teacherId, subjectId));
+	}
+	@RequestMapping(method = RequestMethod.POST,value = "addSubjectStudent")
+	public ResponseEntity<?> addSubjectStudent(@RequestParam Integer studentId,@RequestParam Integer subjectId){
+		return ResponseEntity.status(HttpStatus.OK).body(subjectService.addSubjectStudent(studentId, subjectId));
 	}
 
 

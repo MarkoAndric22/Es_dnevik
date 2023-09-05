@@ -28,7 +28,7 @@ public class SubjectEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Integer id;
 	
-	@Column(nullable=false,name="name_subject")
+	@Column(nullable=false,name="name")
 	@NotNull(message="Name must be provided")
 	@Size(min=2,max=30, message= "Name must be beetwen {min} and {max} characters long.")
 	protected String name;

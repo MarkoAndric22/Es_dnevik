@@ -55,7 +55,7 @@ public class TeacherEntity {
 	@JsonIgnore
 	UserEntity user;
 	
-	@OneToMany(mappedBy="teacher", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="teacher", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <TeacherClass>teacherClass;
 

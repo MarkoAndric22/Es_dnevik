@@ -15,12 +15,12 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="Family")
+@Table(name="ParentStudent")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class ParentStudent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "family_id")
+	@Column(name = "id")
 	protected Integer id;
 	
 	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)

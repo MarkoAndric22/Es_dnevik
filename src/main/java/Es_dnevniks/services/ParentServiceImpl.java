@@ -15,11 +15,14 @@ import Es_dnevniks.entities.StudentEntity;
 import Es_dnevniks.entities.UserEntity;
 import Es_dnevniks.entities.dto.ListMarksDTO;
 import Es_dnevniks.entities.dto.ParentEntityDTO;
+import Es_dnevniks.entities.dto.ParentStudentDTO;
 import Es_dnevniks.entities.dto.SubjectMarksDTO;
 import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.mappers.ParentMapper;
 import Es_dnevniks.repository.ParentRepository;
+import Es_dnevniks.repository.ParentStudentRepository;
 import Es_dnevniks.repository.RoleRepository;
+import Es_dnevniks.repository.StudentRepository;
 import Es_dnevniks.repository.UserRepository;
 import Es_dnevniks.utils.Encryption;
 
@@ -35,9 +38,14 @@ public class ParentServiceImpl implements ParentService {
 	RoleRepository roleRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	StudentRepository studentRepository;
+	@Autowired
+	ParentStudentRepository parentStudentRepository;
 
 	@Override
-	public ParentEntityDTO addParent(UserEntityDTO parents) throws RESTError {
+	public ParentEntityDTO addParent(ParentStudentDTO parents) throws RESTError {
+
 		UserEntity u = new UserEntity();
 		RoleEntity r = roleRepository.findByName("ROLE_PARENT");
 		u.setName(parents.getFirst_name());
@@ -57,9 +65,16 @@ public class ParentServiceImpl implements ParentService {
 		p.setLast_name(parents.getLastName());
 		p.setEmail(parents.getEmail());
 		p.setUser(u);
+		parentRepository.save(p);
 		
-		
-		return parentMapper.toDto(parentRepository.save(p));
+		    for (StudentEntity student : parents.getStudents()) {
+		    	ParentStudent parentStudent = new ParentStudent();
+		    	parentStudent.setParent(p);
+		    	parentStudent.setStudent(student);
+		        parentStudentRepository.save(parentStudent);
+		    }
+
+		   return parentMapper.toDto(p);		    
 	}
 
 	@Override
@@ -102,7 +117,7 @@ public class ParentServiceImpl implements ParentService {
 		ParentEntity parent=parentRepository.findById(parent_id).get();
 		List<ParentStudent> ps = parent.getParentStudents();
 		if(ps.isEmpty()) {
-			throw new RESTError(1,"Students not exist");
+			throw new RESTError(1,"Student-Parent not exist");
 		}
 		
 		List<StudentEntity> students = new ArrayList<StudentEntity>();
@@ -119,8 +134,29 @@ public class ParentServiceImpl implements ParentService {
 			listMarks.add(listMark);
 		}
 		return listMarks;
+		
 	}
 
+	@Override
+	public Iterable<ParentEntity> getAllParent() {
+		Iterable<ParentEntity> parents=parentRepository.findAll();
+				
+		return parents;
+	}
+
+	@Override
+	public ParentEntity getById(Integer ParentId)throws RESTError {
+		if (!parentRepository.existsById(ParentId)) {
+	        throw new RESTError(1, "Roditelj ne postoji");
+	    }
+	    
+	    Optional<ParentEntity> parent = parentRepository.findById(ParentId);
+	    if (parent.isPresent()) {
+	        return parent.get();
+	    } else {
+	        throw new RESTError(2, "Nemoguće dobiti studenta");
+	    }
+	}
 	
 
 	

@@ -15,13 +15,13 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="subjectForStudent")
+@Table(name="studentSubject")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class StudentSubject {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "subjectSid")
+	@Column(name = "id")
 	protected Integer id;
 	
 	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)

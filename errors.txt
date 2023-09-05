@@ -97,3 +97,61 @@ Teacher already have that subject
 Teacher already have that subject
 First name must be beetwen 2 and 30 characters long.
 Name must be beetwen 2 and 30 characters long.
+Teacher not exists
+Teacher not exists
+Teacher not exists
+Teacher not exists
+Email must be unique
+Email must be unique
+Email must be unique
+Email must be unique
+Email must be unique
+Last name must be provided username must be provided Email must be provided Passwords must be the same
+Email must be beetwen 2 and 30 characters long. Email is not valid. Last name must be provided username must be beetwen 5 and 20 characters long.
+Last name must be provided
+Last name must be provided
+Last name must be provided
+Last name must be provided
+ not exist
+ not exist
+ not exist
+ not exist
+ not exist
+Student not exist
+Student not exist
+Email must be unique
+username must be unique
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Email must be unique
+username must be unique
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+username must be unique
+username must be unique
+username must be unique
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Email must be unique
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist
+Student-Parent not exist

@@ -1,5 +1,6 @@
 package Es_dnevniks.controllers;
 
+
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -40,6 +41,7 @@ public class StudentController {
 	binder.addValidators(userValidator);
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.POST)
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> addStudent(@Valid @RequestBody UserEntityDTO student,BindingResult result)  {
@@ -61,6 +63,7 @@ public class StudentController {
 		return result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(" "));
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> modifyStudent(@PathVariable Integer id,@Valid @RequestBody UserEntityDTO student,BindingResult result)  {
@@ -78,6 +81,7 @@ public class StudentController {
 		}
 	}
 		
+		@CrossOrigin(origins = "http://localhost:3000")
 		@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 		@Secured("ROLE_ADMIN")
 		public ResponseEntity<?> removeStudent(@PathVariable Integer id)  {
@@ -89,5 +93,19 @@ public class StudentController {
 			}
 
 		}
-	
+		@CrossOrigin(origins = "http://localhost:3000")
+		@RequestMapping(method = RequestMethod.GET)
+		public ResponseEntity<?> getAllStudent(){
+			return ResponseEntity.status(HttpStatus.OK).body(studentService.getAll());
+		}
+		@CrossOrigin(origins = "http://localhost:3000")
+		@RequestMapping(method = RequestMethod.GET,value = "/{studentId}")
+		public ResponseEntity<?> getStudentById(@PathVariable Integer studentId) throws RESTError{
+			try {
+			return ResponseEntity.status(HttpStatus.OK).body(studentService.getById(studentId));
+			}catch (RESTError e) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+			}
+		}
 }
+		

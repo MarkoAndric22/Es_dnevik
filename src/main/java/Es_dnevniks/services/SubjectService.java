@@ -20,5 +20,12 @@ public interface SubjectService {
 	public List<SubjectEntity> subjectByTeacher(Integer teacherId);
 	
 	public List<SubjectEntity> subjectTeacherDontHave(Integer teacherId);
-
+	
+	public List<SubjectEntity> subjectForStudent(Integer studentId);
+	
+	public List<SubjectEntity> subjectForTeacher(Integer teacherId);
+	
+	public SubjectEntity addSubjectTeacher(Integer teacherId,Integer subjectId);
+	
+	public SubjectEntity addSubjectStudent(Integer studentId, Integer subjectId);
 }

@@ -23,11 +23,11 @@ public class TeacherClass {
 	@Column(name = "teacherClass_id")
 	protected Integer id;
 	
-	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JoinColumn(name ="teacher_id")
 	TeacherEntity teacher;
 	
-	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@ManyToOne(cascade= {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_id")
 	ClassEntity classes;
 

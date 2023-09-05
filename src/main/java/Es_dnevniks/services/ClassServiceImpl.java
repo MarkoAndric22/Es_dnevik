@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import Es_dnevniks.controllers.util.RESTError;
 import Es_dnevniks.entities.ClassEntity;
 import Es_dnevniks.entities.dto.ClassEntityDTO;
@@ -25,10 +24,20 @@ public class ClassServiceImpl implements ClassService{
 
 	@Override
 	public ClassEntityDTO modify(Integer id, ClassEntityDTO classes) throws RESTError {
-		if (classRepository.existsById(id)) {
-			return classMapper.toDto(classRepository.save(classMapper.toEntity(classes)));
+		if (!classRepository.existsById(id)) {
+			throw new RESTError(1, "Class with the given id does not exist.");
 		}
-		throw new RESTError(1, "Class not exists");
+		 
+		    ClassEntity existingClass = classRepository.findById(id).get();
+
+	   
+	    existingClass.setName(classes.getName());
+	    existingClass.setSemester(classes.getSemester());
+	    
+	    ClassEntity savedClass=classRepository.save(existingClass);
+	    
+	    return classMapper.toDto(savedClass);
+	    
 	}
 	
 

@@ -90,4 +90,24 @@ public class StudentServiceImpl implements StudentService {
 		throw new RESTError(1,"Student not exists");
 	}
 
+	@Override
+	public Iterable<StudentEntity> getAll() {
+		Iterable<StudentEntity> student= studentRepository.findAll();
+		return student;
+	}
+
+	@Override
+	public StudentEntity getById(Integer studentid) throws RESTError {
+	    if (!studentRepository.existsById(studentid)) {
+	        throw new RESTError(1, "Student ne postoji");
+	    }
+	    
+	    Optional<StudentEntity> student = studentRepository.findById(studentid);
+	    if (student.isPresent()) {
+	        return student.get();
+	    } else {
+	        throw new RESTError(2, "Nemoguće dobiti studenta");
+	    }
+	}
+
 }

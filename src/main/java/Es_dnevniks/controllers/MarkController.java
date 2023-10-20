@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import Es_dnevniks.controllers.util.RESTError;
+import Es_dnevniks.entities.MarkEnum;
 import Es_dnevniks.entities.dto.MarkEntityDTO;
 import Es_dnevniks.exception.FileErrors;
 import Es_dnevniks.services.MarkService;
@@ -79,6 +80,12 @@ public class MarkController {
 //	@Secured({"ROLE_ADMIN","ROLE_STUDENT"})
 	public ResponseEntity<?> marksForStudents(@PathVariable Integer id) throws RESTError {
 		return ResponseEntity.status(HttpStatus.OK).body(markService.marksForStudents(id));
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/{marks}")
+	public ResponseEntity<?> findByMarks(@PathVariable MarkEnum marks) {
+			return ResponseEntity.status(HttpStatus.OK).body(markService.findByMarks(marks));
+
 	}
 
 }

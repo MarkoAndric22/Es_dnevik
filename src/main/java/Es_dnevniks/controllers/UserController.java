@@ -78,7 +78,7 @@ public class UserController {
 		.signWith(this.secretKey).compact();
 		return "Bearer " + token;
 		}
-
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.POST)
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> add(@Valid @RequestBody UserEntityDTO user,BindingResult result) {
@@ -95,7 +95,7 @@ public class UserController {
 			return new ResponseEntity<>(createErrorMessage(result),HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> login(@RequestParam("email") String email, @RequestParam("password")
 	String pwd) {
@@ -110,30 +110,30 @@ public class UserController {
 		
 		return new ResponseEntity<>("Wrong credentials", HttpStatus.UNAUTHORIZED);
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(path = "/findByEmail/{email}", method = RequestMethod.GET)
 	public ResponseEntity<?> login(@PathVariable String email){
 		UserEntity user = userRepository.findByEmail(email).get();
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(path = "/roles", method = RequestMethod.GET)
 	public ResponseEntity<?> findAllRoles(){
 		return new ResponseEntity<>(roleRepository.findAll(), HttpStatus.OK);
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(path = "/users", method = RequestMethod.GET)
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> listUsers() {
 		return new ResponseEntity<List<UserEntity>>((List<UserEntity>) userRepository.findAll(), HttpStatus.OK);
 	}
-
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(path = "/family", method = RequestMethod.POST)
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> family(@RequestParam Integer parentId, @RequestParam Integer studentId) {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.insertFamily(parentId, studentId));
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.POST, value = "/studentSubject")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> adminGivesSubjectToStudent(@RequestParam Integer studentId, @RequestParam Integer subjectId) {
@@ -145,7 +145,7 @@ public class UserController {
 		}
 		
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.POST, value = "/teacherSubject")
 	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
 	public ResponseEntity<?> adminGivesSubjectToTeacher(@RequestParam Integer teacherId, @RequestParam Integer subjectId) {
@@ -157,14 +157,14 @@ public class UserController {
 		}
 		
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.DELETE, value = "/teacherSubjectDelete")
 	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
 	public ResponseEntity<?> adminRemovesSubjectFromTeacher(@RequestParam Integer teacherId, @RequestParam Integer subjectId) {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.adminRemovesSubjectFromTeacher(teacherId, subjectId));
 	
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.POST, value = "/classToStudent")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> adminGivesClassToStudent(@RequestParam Integer classId, @RequestParam Integer studentId) {
@@ -176,7 +176,7 @@ public class UserController {
 		}
 		
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.POST, value = "/classToTeacher")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> adminGivesClassToTeacher(@RequestParam Integer classId, @RequestParam Integer teacherId) {
@@ -192,7 +192,7 @@ public class UserController {
 	private String createErrorMessage(BindingResult result) {
 		return result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(" "));
 	}
-	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
 	@Secured("ROLE_ADMIN")
 	public ResponseEntity<?> modifyUser(@PathVariable Integer id,@Valid @RequestBody UserEntityDTO user,BindingResult result)  {
@@ -209,7 +209,7 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-		
+	@CrossOrigin(origins = "http://localhost:3000")
 		@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 		@Secured("ROLE_ADMIN")
 		public ResponseEntity<?> removeUser(@PathVariable Integer id)  {
@@ -222,13 +222,13 @@ public class UserController {
 
 		}
 		
-		
+	@CrossOrigin(origins = "http://localhost:3000")
 		@RequestMapping(method = RequestMethod.GET, value = "/getMarks/{id}")
 		@Secured("ROLE_ADMIN")
 		public ResponseEntity<?> findMarksByStudents(@PathVariable Integer id) throws RESTError {
 			return ResponseEntity.status(HttpStatus.OK).body(teacherService.teacherMarks(id));
 		}
-		
+	@CrossOrigin(origins = "http://localhost:3000")
 		@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 		public ResponseEntity<?> findUserById(@PathVariable Integer id)  {
 			return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));

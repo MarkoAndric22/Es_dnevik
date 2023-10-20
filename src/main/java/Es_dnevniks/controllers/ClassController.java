@@ -72,4 +72,20 @@ public class ClassController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
+	@RequestMapping(method = RequestMethod.GET)
+
+	public ResponseEntity<?> getAllClass() {
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(classService.getAll());
+	}
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,value = "/{id}")
+	public ResponseEntity<?> findById(@PathVariable Integer id){
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(classService.findById(id));
+		} catch (RESTError e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
 }

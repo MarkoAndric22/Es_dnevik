@@ -1,11 +1,14 @@
 package Es_dnevniks.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Es_dnevniks.controllers.util.RESTError;
 import Es_dnevniks.entities.ClassEntity;
+import Es_dnevniks.entities.StudentEntity;
+import Es_dnevniks.entities.SubjectEntity;
 import Es_dnevniks.entities.dto.ClassEntityDTO;
 import Es_dnevniks.mappers.ClassMapper;
 import Es_dnevniks.repository.ClassRepository;
@@ -51,6 +54,24 @@ public class ClassServiceImpl implements ClassService{
 
 		throw new RESTError(1, "Class not exists");
 	}
+
+	@Override
+	public Iterable<ClassEntity> getAll() {
+		Iterable<ClassEntity> classes= classRepository.findAll();
+		return classes;
+	}
+
+	@Override
+	public Optional<ClassEntity> findById(Integer id) throws RESTError {
+		 Optional<ClassEntity> classes = classRepository.findById(id);
+		    if (classes.isPresent()) {
+		        return classes;
+		    } else {
+		        throw new RESTError(1, "Classes not exists");
+		    }
+	}
+
+	
 
 	
 }

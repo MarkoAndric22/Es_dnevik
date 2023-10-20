@@ -28,4 +28,5 @@ public interface SubjectService {
 	public SubjectEntity addSubjectTeacher(Integer teacherId,Integer subjectId);
 	
 	public SubjectEntity addSubjectStudent(Integer studentId, Integer subjectId);
+	
 }

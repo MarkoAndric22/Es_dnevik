@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import Es_dnevniks.controllers.util.RESTError;
+import Es_dnevniks.entities.dto.StudentAddDto;
 import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.exception.FileErrors;
 import Es_dnevniks.services.StudentService;
+import Es_dnevniks.utils.StudentCustomValidator;
 import Es_dnevniks.utils.UserCustomValidator;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -35,22 +37,30 @@ public class StudentController {
 	@Autowired
 	UserCustomValidator userValidator;
 	
+	@Autowired
+	StudentCustomValidator studentValidator;
+	
 	@InitBinder
 	protected void initBinder(final WebDataBinder binder)
 	{
-	binder.addValidators(userValidator);
+		if (binder.getTarget() instanceof UserEntityDTO) {
+			binder.addValidators(userValidator);
+		}
+		if (binder.getTarget() instanceof StudentAddDto) {
+			binder.addValidators(studentValidator);
+		}
 	}
 	
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.POST)
 	@Secured("ROLE_ADMIN")
-	public ResponseEntity<?> addStudent(@Valid @RequestBody UserEntityDTO student,BindingResult result)  {
+	public ResponseEntity<?> addStudent(@Valid @RequestBody StudentAddDto student,BindingResult result)  {
 		try {
 		if(result.hasErrors()) {
 			FileErrors.appendToFile(createErrorMessage(result));
 			return new ResponseEntity<>(createErrorMessage(result),HttpStatus.BAD_REQUEST);
 		}else {
-			userValidator.validate(student, result);
+			studentValidator.validate(student, result);
 		}
 		return new ResponseEntity<>(studentService.addStudent(student), HttpStatus.OK);
 		}catch (RESTError e) {
@@ -66,7 +76,7 @@ public class StudentController {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
 	@Secured("ROLE_ADMIN")
-	public ResponseEntity<?> modifyStudent(@PathVariable Integer id,@Valid @RequestBody UserEntityDTO student,BindingResult result)  {
+	public ResponseEntity<?> modifyStudent(@PathVariable Integer id,@Valid @RequestBody StudentAddDto student,BindingResult result)  {
 		try {
 			if(result.hasErrors()) {
 				FileErrors.appendToFile(createErrorMessage(result));

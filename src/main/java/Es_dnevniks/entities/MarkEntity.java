@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,14 +17,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MarkEntity {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected Integer id;
-	
-	MarkEnum marks;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Integer id;
+
+//    @Enumerated(EnumType.ORDINAL) // Koristi ORDINAL za mapiranje na brojeve
+    protected MarkEnum marks;
 
 	@OneToMany(mappedBy="mark", cascade = {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JsonIgnore

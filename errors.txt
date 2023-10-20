@@ -155,3 +155,24 @@ Student-Parent not exist
 Student-Parent not exist
 Student-Parent not exist
 Student-Parent not exist
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Teacher is not allowed to insert that mark
+Student doesnt exist
+Teacher is not allowed to insert that mark
+Subject is not allowed for that student
+Teacher is not allowed to insert that mark

@@ -50,7 +50,7 @@ public class StudentEntity {
 	@OneToMany(mappedBy="student", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
 	@JsonIgnore
 	List <StudentSubjectMark> studentSubjectMark;
-	@JsonIgnore
+	
 	@ManyToOne(cascade= {CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name = "classes_id", nullable = true)
 	ClassEntity classes;
@@ -175,6 +175,16 @@ public class StudentEntity {
 	
 	
 
+	public StudentEntity(
+			@NotNull(message = "First name must be provided") @Size(min = 2, max = 30, message = "First name must be beetwen {min} and {max} characters long.") String first_name,
+			@NotNull(message = "Last name must be provided") @Size(min = 2, max = 30, message = "Last name must be beetwen {min} and {max} characters long.") String last_name,
+			ClassEntity classes) {
+		super();
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.classes = classes;
+	}
+
 	public List<StudentSubjectMark> getStudentSubjectMark() {
 		return studentSubjectMark;
 	}
@@ -185,9 +195,10 @@ public class StudentEntity {
 
 	@Override
 	public String toString() {
-		return "StudentEntity [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + "]";
+		return "StudentEntity [first_name=" + first_name + ", last_name=" + last_name + ", classes=" + classes + "]";
 	}
 
+	
 	
 	
 

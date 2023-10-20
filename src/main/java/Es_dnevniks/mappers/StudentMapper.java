@@ -10,12 +10,12 @@ public class StudentMapper implements GenericMapper<StudentEntity, StudentEntity
 
 	@Override
 	public StudentEntity toEntity(StudentEntityDTO dto) {
-		return new StudentEntity(dto.getFirst_name(),dto.getLast_name());
+		return new StudentEntity(dto.getFirst_name(),dto.getLast_name(), dto.getClasses());
 	}
 
 	@Override
 	public StudentEntityDTO toDto(StudentEntity entity) {
-		return new StudentEntityDTO(entity.getFirst_name(),entity.getLast_name());
+		return new StudentEntityDTO(entity.getFirst_name(),entity.getLast_name(), entity.getClasses());
 	}
 
 }

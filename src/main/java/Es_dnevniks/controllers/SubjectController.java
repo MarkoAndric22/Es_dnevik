@@ -111,9 +111,9 @@ public class SubjectController {
 		return ResponseEntity.status(HttpStatus.OK).body(subjectService.subjectTeacherDontHave(teacherId));
 	}
 	
-	@RequestMapping(method = RequestMethod.GET,value = "subjectForStudent/{teacherId}")
-	public ResponseEntity<?> subjectForStudent(@PathVariable Integer teacherId){
-		return ResponseEntity.status(HttpStatus.OK).body(subjectService.subjectForStudent(teacherId));
+	@RequestMapping(method = RequestMethod.GET,value = "subjectForStudent/{studentId}")
+	public ResponseEntity<?> subjectForStudent(@PathVariable Integer studentId){
+		return ResponseEntity.status(HttpStatus.OK).body(subjectService.subjectForStudent(studentId));
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,value = "subjectForTeacher/{teacherId}")

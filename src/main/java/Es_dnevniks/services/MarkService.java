@@ -4,6 +4,7 @@ import java.util.List;
 
 import Es_dnevniks.controllers.util.RESTError;
 import Es_dnevniks.entities.MarkEntity;
+import Es_dnevniks.entities.MarkEnum;
 import Es_dnevniks.entities.dto.MarkEntityDTO;
 import Es_dnevniks.entities.dto.SubjectMarksDTO;
 
@@ -16,6 +17,8 @@ public interface MarkService {
 	public MarkEntity delete(Integer id) throws RESTError;
 	
 	public List<SubjectMarksDTO> marksForStudents(Integer id)throws RESTError;
+	
+	public MarkEntity findByMarks(MarkEnum marks);
 	
 
 }

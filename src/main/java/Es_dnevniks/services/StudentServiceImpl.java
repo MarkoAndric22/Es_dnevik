@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Es_dnevniks.controllers.util.RESTError;
+import Es_dnevniks.entities.ClassEntity;
 import Es_dnevniks.entities.RoleEntity;
 import Es_dnevniks.entities.StudentEntity;
 import Es_dnevniks.entities.UserEntity;
+import Es_dnevniks.entities.dto.StudentAddDto;
 import Es_dnevniks.entities.dto.StudentEntityDTO;
 import Es_dnevniks.entities.dto.UserEntityDTO;
 import Es_dnevniks.mappers.StudentMapper;
@@ -32,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
 	ClassRepository classRepository;
 
 	@Override
-	public StudentEntityDTO addStudent(UserEntityDTO students) throws RESTError {
+	public StudentEntityDTO addStudent(StudentAddDto students) throws RESTError {
 		UserEntity u = new UserEntity();
 		RoleEntity r = roleRepository.findByName("ROLE_STUDENT");
 		u.setName(students.getFirst_name());
@@ -50,13 +52,15 @@ public class StudentServiceImpl implements StudentService {
 		StudentEntity s  = new StudentEntity();
 		s.setFirst_name(students.getFirst_name());
 		s.setLast_name(students.getLastName());
+		ClassEntity classes= classRepository.findByName(students.getClasss());
+		s.setClasses(classes);
 		s.setUser(u);
 		
 		return studentMapper.toDto(studentRepository.save(s));
 	}
 
 	@Override
-	public StudentEntityDTO modify(Integer id, UserEntityDTO students) throws RESTError {
+	public StudentEntityDTO modify(Integer id, StudentAddDto students) throws RESTError {
 		if(studentRepository.existsById(id)) {
 			
 			UserEntity u = userRepository.findByEmail(students.getEmail()).get();
@@ -68,7 +72,8 @@ public class StudentServiceImpl implements StudentService {
 			StudentEntity s  = studentRepository.findById(id).get();
 			s.setFirst_name(students.getFirst_name());
 			s.setLast_name(students.getLastName());
-			
+			ClassEntity classes= classRepository.findByName(students.getClasss());
+			s.setClasses(classes);
 			s.setUser(u);
 			return studentMapper.toDto(studentRepository.save(s));
 		}

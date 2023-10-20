@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import Es_dnevniks.controllers.util.RESTError;
 import Es_dnevniks.entities.MarkEntity;
+import Es_dnevniks.entities.MarkEnum;
 import Es_dnevniks.entities.StudentEntity;
 import Es_dnevniks.entities.StudentSubject;
 import Es_dnevniks.entities.StudentSubjectMark;
@@ -84,6 +85,11 @@ public class MarkServiceImpl implements MarkService {
 		}
 	
 		return subjectMarksDTOs;
+	}
+
+	@Override
+	public MarkEntity findByMarks(MarkEnum marks) {
+		return markRepository.findByMarks(marks);
 	}
 
 }
